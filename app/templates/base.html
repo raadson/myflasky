@@ -1,0 +1,45 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Flasky{% endblock %}
+{% block navbar %}
+{#导航条模块#}
+<div class="navbar navbar-inverse" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+{#            button，响应式按钮,小屏幕时点击下拉#}
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+{#                绘制了3条斑马线，大屏幕不明显，小屏幕显示#}
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Flasky</a>
+        </div>
+
+        <div class="collapse navbar-collapse">{#导航栏响应式布局#}
+            <ul class="nav navbar-nav">
+                <li><a href="/">Home</a> </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/">猜数字</a> </li>
+            </ul>
+            <ul class="nav navbar-nav">
+                <li><a href="/">算24点</a> </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if current_user.is_authenticated %}
+                <li><a href="{{ url_for('auth.logout') }}">Sign Out</a> </li>
+                {% else %}
+                <li><a href="{{ url_for('auth.login') }}">Sign In</a> </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}

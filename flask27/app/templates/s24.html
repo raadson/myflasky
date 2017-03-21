@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h1>Calc24</h1>
+  <form action="" method="post" name="calc">
+      {{ form.hidden_tag() }}
+      <p>
+          Please enter your OpenID:<br>
+          {{ form.openid1(size=80) }}<br>
+          Please enter your OpenID:<br>
+          {{ form.openid2(size=80) }}<br>
+          Please enter your OpenID:<br>
+          {{ form.openid3(size=80) }}<br>
+          Please enter your OpenID:<br>
+          {{ form.openid4(size=80) }}<br>
+          Please enter your OpenID:<br>
+          {{ form.openid5(size=180) }}<br>
+
+          <!--{%for error in form.openid.errors%}-->
+            <!--<span style="color:red;">[{{error}}]</span>-->
+          <!--{%endfor%}<br>-->
+          <!--{%for pr in providers %}-->
+          <!--<a href="javascript:set_openid('{{pr.url}}','{{pr.name}}');">{{pr.name}}</a>-->
+          <!--{%endfor%}-->
+      </p>
+      <p>{{ form.remember_me }} Remember Me</p>
+      <p><input type="submit" value="Calc24"></p>
+  </form>
+{% endblock %}
+
+
+
+
+
+
+
+
