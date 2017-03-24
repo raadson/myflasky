@@ -16,3 +16,20 @@ return redirect(url_for('index'))
 return render_template('index.html',
 form = form, name = session.get('name'),
 known = session.get('known', False))
+
+#’ ∫≈√‹¬Î≤ª”√“˝∫≈
+(venv) $ set MAIL_USERNAME=<Gmail username>
+(venv) $ set MAIL_PASSWORD=<Gmail password>
+(venv) $ set FLASKY_ADMIN=<Gmail username>
+
+(venv) $ python hello.py shell
+>>> from flask.ext.mail import Message
+>>> from hello import mail
+>>> msg = Message('test subject', sender='you@example.com',recipients=['you@example.com'])
+>>> msg.body = 'text body'
+>>> msg.html = '<b>HTML</b> body'
+>>> with app.app_context():
+        mail.send(msg)
+
+app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'

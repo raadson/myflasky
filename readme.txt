@@ -23,8 +23,8 @@ from hello import Role, User
 先删除sqlite文件再进行下面操作，不然报错不成功
 python hello.py db init
 #迁移
-python hello.py db migrate -m "initial migration"
-python hello.py db upgrade
+python manage.py db migrate -m "initial migration"
+python manage.py db upgrade
 # 此时发现并不想做这个变更，想要回滚到上一个版本咋办呢，来来来，我教你个大招
 python hello.py db downgrade d303dfaaefba，后面这12为数就是上次的数据版本
 
