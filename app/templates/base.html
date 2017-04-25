@@ -3,9 +3,10 @@
 {% block head %}
 {{ super() }}
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico') }}" type="image/x-icon">
-<link href="{{ url_for('static',filename="bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+<link rel="shortcut icon" href="{{ url_for('static',filename='images/favicon.ico') }}" type="image/x-icon">
+<link href="{{ url_for('static',filename="css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',filename="front/css/front_base.css") }}">
 <style>
     .warpper {
         width:50%;
@@ -30,12 +31,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Flasky</a>
+            <a class="navbar-brand" href="{{ url_for('main.index') }}">Flasky</a>
         </div>
 
         <div class="collapse navbar-collapse">{#导航栏响应式布局#}
             <ul class="nav navbar-nav">
-                <li><a href="/">Home</a> </li>
+                <li><a href="{{ url_for('main.index') }}">Home</a> </li>
             </ul>
             <ul class="nav navbar-nav">
                 <li><a href="/">猜数字</a> </li>
@@ -45,10 +46,19 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                    <li>
-                        <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
-                    </li>
-                    <li><a href="{{ url_for('auth.logout') }}">Sign Out</a> </li>
+                <li class="dropdown">{# 下拉式菜单 #}
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ current_user.gravatar(size=20) }}">
+                        Account <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
+                        </li>
+                        <li class="divider"></li>{# 分割线#}
+                        <li><a href="{{ url_for('auth.logout') }}">Sign Out</a> </li>
+                    </ul>
+                </li>
                 {% else %}
                     <li><a href="{{ url_for('auth.login') }}">Sign In</a> </li>
                 {% endif %}
@@ -67,6 +77,6 @@
 {% block scripts %}
 {{ super() }}
 {{ moment.include_moment() }}
-<script src="{{ url_for('static', filename='jquery.min.js') }}" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript"></script>
+{#<script src="{{ url_for('static', filename='jquery.min.js') }}" type="text/javascript"></script>#}
+{#<script src="{{ url_for('static', filename='bootstrap.min.js') }}" type="text/javascript"></script>#}
 {% endblock scripts %}

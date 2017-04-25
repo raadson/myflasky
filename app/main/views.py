@@ -1,5 +1,5 @@
 #coding=utf-8
-from flask import render_template, redirect, url_for, flash, abort
+from flask import render_template, redirect, url_for, flash, abort,request,current_app
 from flask_login import login_required, current_user
 from . import main
 from .forms import NameForm, Calc24Form,PostForm, EditProfileForm, EditProfileAdminForm
@@ -19,8 +19,12 @@ def index():
                     author=current_user._get_current_object())
         db.session.add(post)
         return redirect(url_for('.index'))
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
-    return render_template('index.html', form=form, posts=posts)
+    #博客分页
+    page = request.args.get('page', 1, type=int)
+    pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+        page,per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],error_out=False)
+    posts = pagination.items  #当前页面中的记录 也就是20条
+    return render_template('index.html', form=form, posts=posts,pagination=pagination)
 
 @main.route('/user/<username>')
 def user(username):
@@ -74,7 +78,15 @@ def edit_profile_admin(id):
     form.about_me.data = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
 
+#文章的固定链接
+@main.route('/post/<int:id>')
+def post(id):
+    post = Post.query.get_or_404(id)
+    return render_template('post.html', posts=[post])
 
+@main.route('/semantic',methods=['GET','POST'])
+def semantic():
+    return render_template('semanticweb.html')
 
 @main.route('/calc24',methods=['GET','POST'])
 def calc24():

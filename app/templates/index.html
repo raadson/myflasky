@@ -1,22 +1,57 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
+{% import "_macros.html" as macros %}
 {% block title %}{{ title }}{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Hello,
-        {% if current_user.is_authenticated %}
-            {{ current_user.username }}
-        {% else %}
-            Guest
-        {% endif %}!
-    </h1>
-</div>
-<div>
-    {% if current_user.can(Permission.WRITE_ARTICLES) %}
-    {{ wtf.quick_form(form) }}
-    {% endif %}
-</div>
-{% include '_posts.html' %}
+	<div class="lg-container">
+		<div class="header">
+{#		<div class="form-group">#}
+			{% if current_user.can(Permission.WRITE_ARTICLES) %}
+{#				<form method="POST" action="{{ url_for("main.index") }}">#}
+{#				{{ form.hidden_tag() }}#}
+{#					{{ form.body(id="TextArea", class="ckeditor") }}#}
+{#				{{ wtf.form_field(form.body, id="TextArea", class="ckeditor") }}#}
+{#				{{ form.submit(class="btn btn-primary") }}#}
+{#				</form>#}
+				{{ wtf.quick_form(form) }}
+			{% endif %}
+{#		</div>#}
+		</div>
+		<div class="post-list-container outer-border white-bg">
+			<div class="post-con">
+				{% include '_posts.html' %}
+			</div>
+		</div>
+		{% if pagination %}
+			<div class="pagination>">
+					{{ macros.pagination_widget(pagination, '.index') }}
+			</div>
+		{% endif %}
+	</div>
+	<div class="sm-container">
+		<div class="page-header">
+			<h1>Hello,
+					{% if current_user.is_authenticated %}
+							{{ current_user.username }}
+					{% else %}
+							Guest
+					{% endif %}!
+			</h1>
+		</div>
+		<div class="add-post-group">
+			<a href="#" class="btn btn-warning btn-block">发表新帖子</a>
+		</div>
+		<div class="add-post-group">
+
+		</div>
+		<div class="list-group">
+			<span class="list-group-item header">板块</span>
+		</div>
+	</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+<script src="{{ url_for('static', filename="ckeditor/ckeditor.js") }}"></script>
 {% endblock %}
