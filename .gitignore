@@ -2,6 +2,9 @@
 config.py
 config
 config*
+readme.txt
+pythonrd.docx
+新建文本文档.txt
 # C extensions
 *.so
 hello.py
