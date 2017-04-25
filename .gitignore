@@ -4,7 +4,6 @@ config
 config*
 readme.txt
 pythonrd.docx
-新建文本文档.txt
 # C extensions
 *.so
 hello.py
@@ -41,6 +40,7 @@ nosetests.xml
 .pydevproject
 
 # SQLite databases
+data-dev.sqlite
 *.sqlite
 
 # Virtual environment
